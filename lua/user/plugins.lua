@@ -108,6 +108,9 @@ return packer.startup(function(use)
     end,
     requires = {'nvim-tree/nvim-web-devicons'}
   }
+
+  use 'xiyaowong/nvim-transparent'
+
   -- use {
   --   'goolord/alpha-nvim',
   --   config = function ()

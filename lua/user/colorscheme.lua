@@ -3,7 +3,7 @@ if not staus_ok then
  return
 end
 
-vim.o.background = 'dark'
+-- vim.o.background = 'dark'
 
 local c = require('vscode.colors').get_colors()
 vscode.setup {
@@ -14,7 +14,7 @@ vscode.setup {
     italic_comments = true,
 
     -- Disable nvim-tree background color
-    disable_nvimtree_bg = true,
+    -- disable_nvimtree_bg = true,
 
     -- Override colors (see ./lua/vscode/colors.lua)
     color_overrides = {
