@@ -106,8 +106,6 @@ return packer.startup(function(use)
   }
 
   use 'xiyaowong/nvim-transparent'
-  -- lazy git integration 
-  use 'kdheepak/lazygit.nvim'
   -- use {
   --   'goolord/alpha-nvim',
   --   config = function ()

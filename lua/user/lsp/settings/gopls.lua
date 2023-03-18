@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 return {
 	settings = {
     gopls = {
@@ -18,3 +19,11 @@ return {
 		},
 	},
 }
+=======
+-- return {
+-- 	settings = {
+--     gopls = {
+--     },
+-- 	},
+-- }
+>>>>>>> 913ea5c8e7d47563ce02b768f29a5b8ea24ece35
