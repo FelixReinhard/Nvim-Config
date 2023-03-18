@@ -110,7 +110,6 @@ return packer.startup(function(use)
   }
 
   use 'xiyaowong/nvim-transparent'
-
   -- use {
   --   'goolord/alpha-nvim',
   --   config = function ()

@@ -1,6 +1,6 @@
-return {
-	settings = {
-    gopls = {
-    },
-	},
-}
+-- return {
+-- 	settings = {
+--     gopls = {
+--     },
+-- 	},
+-- }
