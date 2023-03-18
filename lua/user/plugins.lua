@@ -53,6 +53,7 @@ return packer.startup(function(use)
   use "lunarvim/darkplus.nvim"
   use 'folke/tokyonight.nvim'
   use 'Mofiqul/vscode.nvim'
+  use 'sainnhe/sonokai'
 
   -- cmp plugins
   use "hrsh7th/nvim-cmp" -- The completion plugin
@@ -84,7 +85,7 @@ return packer.startup(function(use)
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
   }
-  use "p00f/nvim-ts-rainbow"
+  -- use "p00f/nvim-ts-rainbow"
 
   use "windwp/nvim-autopairs" -- plugin for () {} and []
   use 'numToStr/Comment.nvim'
@@ -101,16 +102,12 @@ return packer.startup(function(use)
   use {
     'glepnir/dashboard-nvim',
     event = 'VimEnter',
-    config = function()
-      require('dashboard').setup {
-        -- config
-      }
-    end,
     requires = {'nvim-tree/nvim-web-devicons'}
   }
 
   use 'xiyaowong/nvim-transparent'
-
+  -- lazy git integration 
+  use 'kdheepak/lazygit.nvim'
   -- use {
   --   'goolord/alpha-nvim',
   --   config = function ()

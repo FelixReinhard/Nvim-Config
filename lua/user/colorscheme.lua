@@ -28,11 +28,11 @@ vscode.setup {
         Cursor = { fg=c.vscDarkBlue, bg=c.vscLightGreen, bold=true },
     }
 }
-
+-- vscode
 
 vim.cmd [[
 try
-  colorscheme vscode 
+  colorscheme sonokai  
 catch /^Vim\%((\a\+)\)\=:E185/
   colorscheme default
   set background=dark
