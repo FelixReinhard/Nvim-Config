@@ -7,10 +7,14 @@ local servers = {
   "clangd",
   "ltex",
   "rust_analyzer",
+  "kotlin_language_server",
+  "zls",
   -- "svelte",
   -- "tailwindcss",
   "cssls",
-  -- "gopls",
+  "jdtls",
+  "gopls",
+  "tsserver",
   -- "gopls",
   -- "bashls",
   --	"jsonls",
@@ -57,3 +61,5 @@ for _, server in pairs(servers) do
 	end
 	lspconfig[server].setup(opts)
 end
+
+require("flutter-tools").setup {} -- use defaults

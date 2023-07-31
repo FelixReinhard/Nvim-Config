@@ -63,7 +63,6 @@ return packer.startup(function(use)
   use "saadparwaiz1/cmp_luasnip" -- snippet completions
   use "hrsh7th/cmp-nvim-lsp"
   use "hrsh7th/cmp-nvim-lua"
-  use "cmp-nvim-lua"
 
   -- snippets
   use "L3MON4D3/LuaSnip" --snippet engine
@@ -76,9 +75,8 @@ return packer.startup(function(use)
   use 'jose-elias-alvarez/null-ls.nvim'
 
   -- Telescope
-  use "nvim-telescope/telescope.nvim"
-  use 'nvim-telescope/telescope-media-files.nvim'
-  use 'nvim-telescope/telescope-media-files.nvim'
+  -- use "nvim-telescope/telescope.nvim"
+  -- use 'nvim-telescope/telescope-media-files.nvim'
 
   -- Treesitter
   use {
@@ -105,7 +103,23 @@ return packer.startup(function(use)
     requires = {'nvim-tree/nvim-web-devicons'}
   }
 
+  -- Flutter 
+  use {
+      'akinsho/flutter-tools.nvim',
+      requires = {
+          'nvim-lua/plenary.nvim',
+          'stevearc/dressing.nvim', -- optional for vim.ui.select
+      },
+  }
+
   use 'xiyaowong/nvim-transparent'
+  -- cool movements
+  use 'ggandor/leap.nvim'
+
+  -- latex 
+  use 'lervag/vimtex'
+  -- java 
+  use { "mfussenegger/nvim-jdtls", ft = { "java" }}
   -- use {
   --   'goolord/alpha-nvim',
   --   config = function ()
