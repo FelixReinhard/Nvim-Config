@@ -35,6 +35,14 @@ vim.opt.guifont = "monospace:h17"               -- the font used in graphical ne
 
 vim.opt.shortmess:append "c"
 
+vim.opt.number = true               -- show absolute number
+vim.opt.relativenumber = true       -- add numbers to each line on the left side
+vim.opt.cursorline = true           -- highlight cursor line underneath the cursor horizontally
+vim.opt.splitbelow = true           -- open new vertical split bottom
+vim.opt.splitright = true           -- open new horizontal splits right
+-- vim.opt.termguicolors = true        -- enabl 24-bit RGB color in the TUI
+vim.opt.showmode = false     
+
 vim.cmd "set whichwrap+=<,>,[,],h,l"
 vim.cmd [[set iskeyword+=-]]
 vim.cmd [[set formatoptions-=cro]] -- TODO: this doesn't seem to work 
