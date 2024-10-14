@@ -181,3 +181,8 @@ local opts = { on_attach = require("settings.lsp_keymaps").on_attach, capabiliti
 -- Setup lsps
 require 'lspconfig'.lua_ls.setup { opts }
 require 'lspconfig'.rust_analyzer.setup { opts }
+require 'lspconfig'.ts_ls.setup { opts }
+require 'lspconfig'.html.setup { opts }
+
+
+
