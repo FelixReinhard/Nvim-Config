@@ -1,7 +1,7 @@
-return {
-	settings = {
-    ltex_ls = {
-      dictonary = {},
-    },
-	},
-}
+-- return {
+-- 	settings = {
+--     ltex_ls = {
+--       dictonary = {},
+--     },
+-- 	},
+-- }
