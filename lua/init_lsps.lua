@@ -1,107 +1,102 @@
--- Set up nvim-cmp.
-local cmp = require 'cmp'
--- load luasnip
-local snip_status_ok, luasnip = pcall(require, "luasnip")
-if not snip_status_ok then
-  return
-end
+local lspconfig = require('lspconfig')
+-- tells lsp to use cmp to autocompletion i think
+local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+local opts = {
+  capabilities = lsp_capabilities,
+}
+-- setup servers
+lspconfig.lua_ls.setup(opts)
+lspconfig.rust_analyzer.setup(opts)
+lspconfig.pylsp.setup(opts)
+lspconfig.clangd.setup(opts)
 
 
+-- atach keybinds
+vim.api.nvim_create_autocmd('LspAttach', {
+  desc = "LSP Actions",
+  callback = function()
+    require("settings/lsp_keymaps").lsp_keymaps()
+  end
+})
+
+-- load snippets
+require('luasnip.loaders.from_vscode').lazy_load()
+
+-- cmp
+vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
+
+local cmp = require('cmp')
+local luasnip = require('luasnip')
+
+local select_opts = { behavior = cmp.SelectBehavior.Select }
+
+-- functions used for tab in cmp
 local check_backspace = function()
   local col = vim.fn.col "." - 1
   return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
 end
 
-local kind_icons = {
-  Text = "",
-  Method = "m",
-  Function = "",
-  Constructor = "",
-  Field = "",
-  Variable = "",
-  Class = "",
-  Interface = "",
-  Module = "",
-  Property = "",
-  Unit = "",
-  Value = "",
-  Enum = "",
-  Keyword = "",
-  Snippet = "",
-  Color = "",
-  File = "",
-  Reference = "",
-  Folder = "",
-  EnumMember = "",
-  Constant = "",
-  Struct = "",
-  Event = "",
-  Operator = "",
-  TypeParameter = "",
-}
-
 cmp.setup({
   snippet = {
-    -- REQUIRED - you must specify a snippet engine
     expand = function(args)
-      -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-      require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-      -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-      -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-      -- vim.snippet.expand(args.body) -- For native neovim snippets (Neovim v0.10+)
-    end,
-  },
-
-  formatting = {
-    fields = { "kind", "abbr", "menu" },
-    format = function(entry, vim_item)
-      -- Kind icons
-      vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
-      -- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
-      vim_item.menu = ({
-        nvim_lsp = "[Lsp]",
-        nvim_lua = "[Lua]",
-        luasnip = "[Snippet]",
-        buffer = "[Buffer]",
-        path = "[Path]",
-      })[entry.source.name]
-      return vim_item
-    end,
+      luasnip.lsp_expand(args.body)
+    end
   },
   sources = {
-    { name = "nvim_lsp" },
-    { name = "luasnip" },
-    { name = "nvim_lua" },
-    { name = "buffer" },
-    { name = "path" },
-  },
-  confirm_opts = {
-    behavior = cmp.ConfirmBehavior.Replace,
-    select = false,
+    { name = 'path' },
+    { name = 'nvim_lsp', keyword_length = 1 },
+    { name = 'buffer',   keyword_length = 3 },
+    { name = 'luasnip',  keyword_length = 2 },
   },
   window = {
-    documentation = cmp.config.window.bordered(),
+    completion = cmp.config.window.bordered({}),
+    documentation = cmp.config.window.bordered({}),
   },
-  experimental = {
-    ghost_text = false,
-    native_menu = false,
+  formatting = {
+    fields = { 'menu', 'abbr', 'kind' },
+    format = function(entry, item)
+      local menu_icon = {
+        nvim_lsp = 'λ',
+        luasnip = '⋗',
+        buffer = 'Ω',
+        path = '🖫',
+      }
+
+      item.menu = menu_icon[entry.source.name]
+      return item
+    end,
   },
-  mapping = cmp.mapping.preset.insert({
-    ["<C-k>"] = cmp.mapping.select_prev_item(),
-    ["<C-j>"] = cmp.mapping.select_next_item(),
-    ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
-    ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
-    ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-    ["<C-y>"] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-    ["<C-e>"] = cmp.mapping {
-      i = cmp.mapping.abort(),
-      c = cmp.mapping.close(),
-    },
-    -- ["jk"] = cmp.mapping {
-    -- 	i = cmp.
-    -- },
-    -- Accept currently selected item. If none selected, `select` first item.
-    -- Set `select` to `false` to only confirm explicitly selected items.
+  mapping = {
+    ['<Up>'] = cmp.mapping.select_prev_item(select_opts),
+    ['<Down>'] = cmp.mapping.select_next_item(select_opts),
+
+    ['<C-p>'] = cmp.mapping.select_prev_item(select_opts),
+    ['<C-n>'] = cmp.mapping.select_next_item(select_opts),
+
+    ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-d>'] = cmp.mapping.scroll_docs(4),
+
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+    ['<CR>'] = cmp.mapping.confirm({ select = false }),
+
+    ['<C-f>'] = cmp.mapping(function(fallback)
+      if luasnip.jumpable(1) then
+        luasnip.jump(1)
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+
+    ['<C-b>'] = cmp.mapping(function(fallback)
+      if luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
@@ -118,67 +113,22 @@ cmp.setup({
       "i",
       "s",
     }),
-    ["<S-Tab>"] = cmp.mapping(function(fallback)
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
+        cmp.select_prev_item(select_opts)
       else
         fallback()
       end
-    end, {
-      "i",
-      "s",
-    }),
-
-    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-  }),
-  sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' }, -- For luasnip users.
-    -- { name = 'ultisnips' }, -- For ultisnips users.
-    -- { name = 'snippy' }, -- For snippy users.
-  }, {
-    { name = 'buffer' },
-  })
-})
-
--- To use git you need to install the plugin petertriho/cmp-git and uncomment lines below
--- Set configuration for specific filetype.
---[[ cmp.setup.filetype('gitcommit', {
-    sources = cmp.config.sources({
-      { name = 'git' },
-    }, {
-      { name = 'buffer' },
-    })
- })
- require("cmp_git").setup() ]] --
-
--- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline({ '/', '?' }, {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = {
-    { name = 'buffer' }
-  }
-})
-
--- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline(':', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = cmp.config.sources({
-    { name = 'path' }
-  }, {
-    { name = 'cmdline' }
-  }),
-  matching = { disallow_symbol_nonprefix_matching = false }
+    end, { 'i', 's' }),
+  },
 })
 
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+-- Cool ui for lsp
+require("LspUI").setup({})
 
-local opts = { on_attach = require("settings.lsp_keymaps").on_attach, capabilities = capabilities }
--- Setup lsps
-require 'lspconfig'.lua_ls.setup { opts }
-require 'lspconfig'.rust_analyzer.setup { opts }
-require 'lspconfig'.ts_ls.setup { opts }
-require 'lspconfig'.html.setup { opts }
+
+
+
+
+-- configure debugging

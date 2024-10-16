@@ -6,6 +6,7 @@ return {
 		"williamboman/mason.nvim",
 		opts = {
 			ui = {
+        border = "rounded",
 				icons = {
 				    package_installed = "✓",
 				    package_pending = "➜",
@@ -14,4 +15,9 @@ return {
 			    }
 		}
 	},
+  -- cool ui for lsp
+  {
+    "jinzhongjia/LspUI.nvim",
+    branch = "main",
+  }
 }

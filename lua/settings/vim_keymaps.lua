@@ -52,4 +52,4 @@ keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
 -- Misc
 -- Save Buffer
-keymap("n", "<leader>w", ":w<CR>", opts)
+keymap("n", "<leader>w", ":w!<CR>", opts)
