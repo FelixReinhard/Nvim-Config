@@ -10,6 +10,9 @@ lspconfig.lua_ls.setup(opts)
 lspconfig.rust_analyzer.setup(opts)
 lspconfig.pylsp.setup(opts)
 lspconfig.clangd.setup(opts)
+lspconfig.gopls.setup(opts)
+lspconfig.html.setup(opts)
+lspconfig.markdown_oxide.setup(opts)
 
 
 -- atach keybinds

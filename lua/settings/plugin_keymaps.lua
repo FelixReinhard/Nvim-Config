@@ -13,3 +13,6 @@ keymap("n", "<leader>tf", "<cmd>Telescope find_files<cr>", opts)
 keymap("n", "<leader>tb", "<cmd>Telescope buffers<cr>", opts)
 
 
+keymap("n", "<leader>ms", "<cmd>MarkdownPreview<cr>", opts)
+
+
