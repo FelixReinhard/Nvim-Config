@@ -51,6 +51,17 @@ cmp.setup({
     { name = 'nvim_lsp', keyword_length = 1 },
     { name = 'buffer',   keyword_length = 3 },
     { name = 'luasnip',  keyword_length = 2 },
+    {
+      name = "spell",
+      option = {
+        keep_all_entries = false,
+        enable_in_context = function()
+          return true
+        end,
+        preselect_correct_word = true,
+      },
+    },
+
   },
   window = {
     completion = cmp.config.window.bordered({}),
