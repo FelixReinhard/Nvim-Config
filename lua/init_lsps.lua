@@ -13,6 +13,7 @@ lspconfig.clangd.setup(opts)
 lspconfig.gopls.setup(opts)
 lspconfig.html.setup(opts)
 lspconfig.markdown_oxide.setup(opts)
+lspconfig.zls.setup(opts)
 
 
 -- atach keybinds

@@ -7,3 +7,6 @@ CCS
 transpiles
 CSS
 AST
+stderr
+stdout
+zig

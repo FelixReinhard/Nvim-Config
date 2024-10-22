@@ -27,7 +27,8 @@ vim.opt.cursorline = true                       -- highlight the current line
 vim.opt.number = true                           -- set numbered lines
 vim.opt.relativenumber = false                  -- set relative numbered lines
 vim.opt.numberwidth = 4                         -- set number column width to 2 {default 4}
-vim.opt.signcolumn = "yes"                      -- always show the sign column, otherwise it would shift the text each time
+vim.opt.signcolumn =
+"yes"                                           -- always show the sign column, otherwise it would shift the text each time
 vim.opt.wrap = false                            -- display lines as one long line
 vim.opt.scrolloff = 8                           -- is one of my fav
 vim.opt.sidescrolloff = 8
@@ -35,18 +36,24 @@ vim.opt.guifont = "monospace:h17"               -- the font used in graphical ne
 
 vim.opt.shortmess:append "c"
 
-vim.opt.number = true               -- show absolute number
-vim.opt.relativenumber = true       -- add numbers to each line on the left side
-vim.opt.cursorline = true           -- highlight cursor line underneath the cursor horizontally
-vim.opt.splitbelow = true           -- open new vertical split bottom
-vim.opt.splitright = true           -- open new horizontal splits right
+vim.opt.number = true         -- show absolute number
+vim.opt.relativenumber = true -- add numbers to each line on the left side
+vim.opt.cursorline = true     -- highlight cursor line underneath the cursor horizontally
+vim.opt.splitbelow = true     -- open new vertical split bottom
+vim.opt.splitright = true     -- open new horizontal splits right
 -- vim.opt.termguicolors = true        -- enabl 24-bit RGB color in the TUI
-vim.opt.showmode = false     
+vim.opt.showmode = false
 
 vim.cmd "set whichwrap+=<,>,[,],h,l"
 vim.cmd [[set iskeyword+=-]]
-vim.cmd [[set formatoptions-=cro]] -- TODO: this doesn't seem to work 
+vim.cmd [[set formatoptions-=cro]] -- TODO: this doesn't seem to work
 
 -- enable spellchecking
-vim.opt.spelllang = 'en_us'
-vim.opt.spell = true
+
+vim.api.nvim_create_autocmd({ 'FileType' }, {
+  pattern = { "*.tex", "*.md" },
+  callback = function()
+    vim.opt.spelllang = 'en_us'
+    vim.opt.spell = true
+  end
+})
