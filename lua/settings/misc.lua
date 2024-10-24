@@ -49,11 +49,13 @@ vim.cmd [[set iskeyword+=-]]
 vim.cmd [[set formatoptions-=cro]] -- TODO: this doesn't seem to work
 
 -- enable spellchecking
+vim.cmd "filetype on"
+-- vim.api.nvim_create_autocmd({ 'FileType' }, {
+--   pattern = { "*.tex", "*.md" },
+--   callback = function()
+--     vim.opt.spelllang = 'en_us'
+--     vim.opt.spell = true
+--   end
+-- })
 
-vim.api.nvim_create_autocmd({ 'FileType' }, {
-  pattern = { "*.tex", "*.md" },
-  callback = function()
-    vim.opt.spelllang = 'en_us'
-    vim.opt.spell = true
-  end
-})
+vim.cmd "autocmd FileType latex,tex,md,markdown setlocal spell"
