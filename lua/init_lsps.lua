@@ -14,6 +14,9 @@ lspconfig.gopls.setup(opts)
 lspconfig.html.setup(opts)
 lspconfig.markdown_oxide.setup(opts)
 lspconfig.zls.setup(opts)
+lspconfig.asm_lsp.setup(opts)
+lspconfig.csharp_ls.setup(opts)
+lspconfig.jdtls.setup(opts)
 
 
 -- atach keybinds
@@ -61,6 +64,7 @@ cmp.setup({
         end,
         preselect_correct_word = true,
       },
+      keyword_length = 1,
     },
 
   },

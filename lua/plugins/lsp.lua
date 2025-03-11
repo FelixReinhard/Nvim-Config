@@ -1,9 +1,11 @@
 return {
 	{
-		'neovim/nvim-lspconfig'
+		'neovim/nvim-lspconfig',
+    -- tag = "v1.7.0"
 	},
 	{
 		"williamboman/mason.nvim",
+    -- tag = "v1.10.0",
 		opts = {
 			ui = {
         border = "rounded",
